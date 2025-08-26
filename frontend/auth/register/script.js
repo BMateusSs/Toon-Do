@@ -3,6 +3,7 @@ const passwordInput = document.getElementById('password');
 const confirmPasswordInput = document.getElementById('confirm-password');
 const emailInput = document.getElementById('email');
 const usernameInput = document.getElementById('username');
+const errorMessage = document.getElementById("erro-message")
 
 registrationForm.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -43,8 +44,9 @@ async function registerUser() {
 
         if (response.ok) {
             alert('Usuário registrado com sucesso!');
+            errorMessage.textContent = ''
         } else {
-            alert(result.error || 'Ocorreu um erro no registro.');
+            errorMessage.textContent = result.error
         }
 
     } catch (err) {
