@@ -21,7 +21,7 @@ def validate_register(username, email, password):
         hashed_password = password_hash(password)
         response = register_user(conn, cursor, username, email, hashed_password)
 
-        return response
+        return True, response
     
     except Exception as e:
         return False, str(e)
@@ -44,5 +44,3 @@ def is_valid_email(cursor, email):
     cursor.execute(query, (email,))
     response = cursor.fetchone()
     return response is None
-
-validate_register('bruninho', 'bruno', 'M()ck1ngj4y')
