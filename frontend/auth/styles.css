@@ -1,0 +1,83 @@
+.cor-rosa {
+    color: #FF497A;
+}
+
+.barlow-regular {
+  font-family: "Barlow", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.barlow-semibold {
+  font-family: "Barlow", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.barlow-bold {
+  font-family: "Barlow", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #4A90E2;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    border-radius: 10px;
+    background-color: #F9F9F9;
+}   
+
+.section {
+    width: 100%
+    
+}
+
+.login.section {
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.label {
+    color: #192A56;
+}
+
+input {
+    width: 100%;
+    height: 25px;
+    border: 3px solid #192A56;
+    border-radius: 8px;
+    background-color: #F9F9F9;
+    padding: 5px;
+}
+
+.button {
+    width: 150px;
+    height: 40px;
+    background-color: #F39C12;
+    color: #192A56;
+    border-radius: 10px;
+   
+    transition: all 0.3s ease-in-out;
+}
+
+.button:hover {
+    background-color: #192A56;
+    color: #F39C12;
+}
+
