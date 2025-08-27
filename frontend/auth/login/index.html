@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <h1 class="label barlow-bold">Entrar</h1>
-        <form>
+        <form id="registrationForm" action="/submit" method="post">
             <div class="section login">
                 <label class="label barlow-semibold">Email / Nome de usuário</label>
                 <input type="email" id="email-user" name="email"> <b></b>
@@ -23,5 +23,6 @@
             <button class="button barlow-semibold" type="submit">Entrar</button>
         </form>
     </div>
+    <script type="module" src="../../utils/useFetch.js"></script>
 </body>
 </html>
