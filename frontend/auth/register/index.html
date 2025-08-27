@@ -3,27 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    </style>
+    <link rel="stylesheet" href="../styles.css">
     <title>Registro</title>
 </head>
 <body>
     <div class="container">
+        <h1 class="label barlow-bold">Registrar</h1>
         <form id="registrationForm" action="/submit" method="post">
-        <label>Nome</label>
-        <input  type="text" id="name" name="name"><br><br>
+            
+            <p class="barlow-regular cor-rosa" id="erro-message"></p>
+            
+            <div class="section">
+                <label class="label barlow-semibold">Nome</label>
+                <input  type="text" id="name" name="name"><br><br>
+            </div>
 
-        <label>Nome de usuário</label>
-        <input type="text" id="username" name="username"><br><br>
+            <div class="section">
+                <label class="label barlow-semibold">Nome de usuário</label>
+                <input type="text" id="username" name="username"><br><br>
+            </div>
 
-        <label>E-mail</label>
-        <input type="email" id="email" name="email"><br><br>
+            <div class="section">
+                <label class="label barlow-semibold">E-mail</label>
+                <input type="email" id="email" name="email"><br><br>
+            </div>
 
-        <label>Senha</label>
-        <input type="password" id="password" name="password"><br><br>
+            <div class="section">
+                <label class="label barlow-semibold">Senha</label>
+                <input type="password" id="password" name="password"><br><br>
+            </div>
 
-        <label>Confirme a senha</label>
-        <input type="password" id="confirm-password" name="confirm-password"><br><br>
-
-        <button type="submit">Criar conta</button>
+            <div class="section">
+                <label class="label barlow-semibold">Confirme a senha</label>
+                <input type="password" id="confirm-password" name="confirm-password"><br><br>
+            </div>
+            
+            <button class="button barlow-semibold" type="submit">Criar conta</button>
+            
         </form>
     </div>
     <script src="script.js"></script>
