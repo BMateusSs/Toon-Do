@@ -1,6 +1,7 @@
 from flask import jsonify, request
 from . import auth_bp
 from backend.src.database.validate_register import validate_register
+from backend.src.database.validate_login import validate_login
 
 @auth_bp.route('/register', methods=['POST'])
 def register():
@@ -19,3 +20,10 @@ def register():
     else:
         return jsonify({'error': message}), 409
     
+@auth_bp.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    credential = data.get('credential')
+    password = data.get('password')
+
+    user_id = validate_login(credential, password)
