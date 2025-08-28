@@ -1,3 +1,4 @@
+import {methodPost} from '../../utils/methods.js'
 import {useFetch} from '../../utils/useFetch.js'
 
 
@@ -10,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const password = document.getElementById('password');
 
     loginForm.addEventListener('submit', async (event) => {
-        event.preventDefault(); // agora vai funcionar
+        event.preventDefault();
 
         const url = 'http://127.0.0.1:5000/auth/login';
 
@@ -19,14 +20,16 @@ document.addEventListener('DOMContentLoaded', () => {
             password: password.value
         };
 
-        const {result, error} = await useFetch(url, body);
+        const config = methodPost(body)
+
+        const {result, error} = await useFetch(url, config);
 
         if (error) {
             errorMessage.innerHTML = error;
         } else {
             const token = result.token;
-            alert(token);
             localStorage.setItem('token', token);
+            window.location.href = '../../home/index.html'
         }
     });
 });

@@ -1,4 +1,5 @@
-import { useFetch } from '../../utils/useFetch.js';
+import {methodPost} from '../../utils/methods.js'
+import {useFetch} from '../../utils/useFetch.js'
 
 document.addEventListener("DOMContentLoaded", () => {
     const registrationForm = document.getElementById('registrationForm');
@@ -27,7 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
             password: passwordInput.value
         };
 
-        const { result, error } = await useFetch(url, body);
+        const config = methodPost(body)
+
+        const { result, error } = await useFetch(url, config);
 
         if (error) {
             errorMessage.innerHTML = error;
