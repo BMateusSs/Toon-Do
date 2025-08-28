@@ -14,10 +14,7 @@ export async function useFetch(url, body) {
 
         result = await response.json();
 
-        if (response.ok) {
-            alert('Usuário registrado com sucesso!');
-            
-        } else {
+        if (!response.ok) {
             error = result.error
         }
 
