@@ -2,6 +2,7 @@ from flask import jsonify, request
 from . import auth_bp
 from backend.src.database.validate_register import validate_register
 from backend.src.database.validate_login import validate_login
+from backend.src.utils.generate_token import generate_token
 
 @auth_bp.route('/register', methods=['POST'])
 def register():
@@ -26,4 +27,11 @@ def login():
     credential = data.get('credential')
     password = data.get('password')
 
-    user_id = validate_login(credential, password)
+    status, content = validate_login(credential, password)
+
+    if status:
+        user_id = content
+        token = generate_token(user_id)
+        return jsonify({'token': token}), 200
+    else:
+        return jsonify({'error': 'Credenciais inválidas.'}), 404
