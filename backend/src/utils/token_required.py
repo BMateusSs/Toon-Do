@@ -5,7 +5,7 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-SECRET_KEY = os.getenv('SECRET_KEY_TOKEN')
+SECRET_KEY = '507527193a6e369d6236297a20c2000c69c49a7e127babb7ddc9c6c4034f78e2'
 
 def token_required(f):
     @wraps(f)
@@ -23,7 +23,7 @@ def token_required(f):
             if not user_id:
                 return jsonify({'error': 'ID do usuário não encontrado no token.'}), 401
             
-            kwargs['user_id'] = user_id
+            kwargs['user_id'] = int(user_id)
 
         except jwt.ExpiredSignatureError:
             return jsonify({'error': 'Token expirado. Faça login novamente.'}), 401
