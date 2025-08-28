@@ -1,16 +1,9 @@
-export async function useFetch(url, body) {
+export async function useFetch(url, config) {
     let error = null;
     let result = null
 
     try {
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        });
+        const response = await fetch(url, config);
 
         result = await response.json();
 
