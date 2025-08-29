@@ -23,13 +23,14 @@ def projects(user_id):
         query='''
         SELECT
             p.id,
-            p.title
+            p.title,
+            p.color
         FROM
             projects p
         WHERE
-            p.user_id = %s;
+            p.user_id = %s
         ORDER BY updated_at DESC
-        LIMIT 5
+        LIMIT 5;
         '''
         cursor.execute(query, (user_id,))
         data = cursor.fetchall()
@@ -38,7 +39,8 @@ def projects(user_id):
         for project in data:
             response.append({
                 'id': project[0],
-                'title': project[1]
+                'title': project[1],
+                'color': project[2]
             })
 
         return response
