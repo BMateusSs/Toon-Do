@@ -1,0 +1,145 @@
+.barlow-regular {
+  font-family: "Barlow", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.barlow-semibold {
+  font-family: "Barlow", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.barlow-bold {
+  font-family: "Barlow", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #4A90E2;
+    margin: 0 auto;
+}
+
+.container {
+    width: 1000px;
+    border-radius: 20px;
+    background-color: #F9F9F9;
+    padding: 20px;
+}
+
+.state-container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    width: 70px;
+    height: 70px;
+    border: 2px solid #4A90E2;
+    border-radius: 10px;
+    
+}
+
+.value {
+    font-size: 40px;
+}
+
+.label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 2px solid #4A90E2;
+    width: 100%;
+}
+
+.label-text {
+    font-size: 12px
+}
+
+.recent-projects{
+    display: flex;
+    gap: 10px;
+}
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 250px;
+    height: 200px; /* Altura fixa para alinhar os itens */
+    background-color: pink;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    padding: 15px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+/* Container do topo do card (data e categoria) */
+.header {
+    display: flex;
+    justify-content: space-between; /* Empurra a data e a categoria para as extremidades */
+    align-items: center;
+}
+
+/* Container do meio do card (título e progresso) */
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza o título e o progresso */
+    text-align: center;
+    gap: 15px;
+}
+
+.title {
+    font-size: 1.2rem; /* Aumenta a fonte para destaque */
+    margin: 0;
+}
+
+/* Container do progresso */
+.progress {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 5px;
+}
+
+/* Container que alinha o texto "Progresso" e a porcentagem */
+.progress-details {
+    display: flex;
+    justify-content: space-between;
+}
+
+.progress-track {
+    width: 100%;
+    height: 5px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.progress-fill {
+    height: 5px;
+    width: 0%;
+    background-color: green;
+    border-radius: 5px;
+}
+.bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 10px;
+}
+
+/* Estilos de fonte e espaçamento genéricos */
+.barlow-regular, .barlow-semibold, .barlow-bold {
+    font-family: "Barlow", sans-serif;
+    margin: 0;
+}
+.text {
+    font-size: 12px;
+}
+
