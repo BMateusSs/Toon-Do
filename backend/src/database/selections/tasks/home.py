@@ -24,12 +24,19 @@ def projects(user_id):
         SELECT
             p.id,
             p.title,
-            p.color
+            p.color,
+            COUNT(t.proj_id) AS total_task,
+            CAST(SUM(t.completed) AS FLOAT) / COALESCE(COUNT(t.id), 1) AS percent,
+            DATEDIFF(p.limit_date, CURDATE()) AS days_remaining
         FROM
             projects p
+        LEFT JOIN
+            tasks t
+        ON p.id = t.proj_id
         WHERE
             p.user_id = %s
-        ORDER BY updated_at DESC
+        GROUP BY p.id
+        ORDER BY p.updated_at DESC
         LIMIT 5;
         '''
         cursor.execute(query, (user_id,))
@@ -37,10 +44,14 @@ def projects(user_id):
 
         response = []
         for project in data:
+            percent = project[4] * 100
             response.append({
                 'id': project[0],
                 'title': project[1],
-                'color': project[2]
+                'color': project[2],
+                'total_task': project[3],
+                'percent': int(percent),
+                'days_remaining': project[5]
             })
 
         return response
@@ -89,3 +100,5 @@ def tasks_today(user_id):
     except:
         cursor.close()
         conn.close()
+
+print(projects(1))
