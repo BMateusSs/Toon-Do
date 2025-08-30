@@ -101,4 +101,29 @@ def tasks_today(user_id):
         cursor.close()
         conn.close()
 
-print(projects(1))
+def habits_today(user_id):
+    conn = connection()
+    cursor = conn.cursor()
+
+    try:
+        query = '''
+            SELECT id, name, type, image_url FROM habits WHERE user_id = %s AND is_active = 1 ORDER BY created_at ASC;
+        '''
+        cursor.execute(query, (user_id,))
+        tasks = cursor.fetchall()
+
+        response = []
+        for task in tasks:
+            response.append({
+                'habit_id': task[0],
+                'name': task[1],
+                'type': task[2],
+                'image': task[3]
+            })
+        return response
+    
+    except:
+        cursor.close()
+        conn.close()
+
+print(habits_today(1))
