@@ -7,6 +7,7 @@ from backend.src.utils.generate_token import generate_token
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
+    name = data.get('name')
     username = data.get('username')
     email = data.get('email')
     password = data.get('password')
@@ -14,7 +15,7 @@ def register():
     if not all([username, email, password]):
         return jsonify({'Erro': 'Dados imcompleto'}), 400
 
-    status, message = validate_register(username, email, password)
+    status, message = validate_register(name, username, email, password)
 
     if status:
         return jsonify({'message': 'Usuário registrado com sucesso'}), 201

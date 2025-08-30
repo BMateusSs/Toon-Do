@@ -2,7 +2,7 @@ from backend.src.database.connection import connection
 from backend.src.utils.password_hash import password_hash
 from backend.src.database.insertions.auth.register_user import register_user
 
-def validate_register(username, email, password):
+def validate_register(name, username, email, password):
     conn = None
     cursor = None
 
@@ -19,7 +19,7 @@ def validate_register(username, email, password):
             return False, 'Email já em uso'
 
         hashed_password = password_hash(password)
-        response = register_user(conn, cursor, username, email, hashed_password)
+        response = register_user(conn, cursor, name, username, email, hashed_password)
 
         return True, response
     
