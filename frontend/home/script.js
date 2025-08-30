@@ -2,74 +2,121 @@ import {methodGet} from '../utils/methods.js'
 import {useFetch} from '../utils/useFetch.js'
 
 document.addEventListener('DOMContentLoaded', async () => {
-    
-
-
     async function loadingData(){
         const totalProjects = document.querySelector(".total-projects");
-        const projects = document.querySelector(".recent-projects")
+        const projectsContainer = document.querySelector(".recent-projects");
 
         const url = 'http://127.0.0.1:5000/tasks/home';
-        const config = methodGet()
+        const config = methodGet();
 
-        const {result, error} = await useFetch(url, config) 
+        const {result, error} = await useFetch(url, config);
 
         if (error){
-            alert(error)
-        }else{
-            totalProjects.innerHTML=`${result.total_projects}`
+            alert(error);
+        } else {
+            totalProjects.innerHTML = `${result.total_projects}`;
             const recentProjects = result.recent_projects;
+            const tasksToday = result.tasks_today;
 
-            // Apenas a parte do loop
-        recentProjects.forEach((proj) => {
-            const project = document.createElement('div') 
-            project.innerHTML=`
-                <div class="header">
-                    <p class="date-text barlow-regular">29 ago, 2025</p>
-                    <div class="category-container">
-                        <p class="barlow-regular category-text">Estudo</p>
-                    </div>
-                </div>
-                <div class="content">
-                    <h3 class="title barlow-bold">
-                        ${proj.title}
-                    </h3>
-                    <div class="progress">
-                        <div class="progress-details">
-                            <p class="barlow-semibold">Progresso</p>
-                            <p class="barlow-semibold percent-text"></p>
+            renderTasksToday(tasksToday);
+            
+            recentProjects.forEach((proj) => {
+                const project = document.createElement('div');
+                const remaining = proj.days_remaining
+
+                const daysRemaining = remaining === 0 ? 'Até hoje' : remaining === 1 ? '1 dia restante' : `${remaining} dias restantes`
+
+                project.innerHTML = `
+                    <div class="header">
+                        <p class="date-text barlow-regular">29 ago, 2025</p>
+                        <div class="category-container">
+                            <p class="barlow-regular category-text">Estudo</p>
                         </div>
-                        <div class="progress-track">
-                            <div class="progress-fill">
+                    </div>
+                    <div class="content">
+                        <h3 class="title barlow-bold">
+                            ${proj.title}
+                        </h3>
+                        <div class="progress">
+                            <div class="progress-details">
+                                <p class="barlow-semibold">Progresso</p>
+                                <p class="barlow-semibold percent-text"></p>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-fill">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="bottom">
-                    <p class="text barlow-semibold">3 tarefas</p> 
-                    <p class="text barlow-semibold">1 dia restante</p>
-                </div>
-            `
-            const color = darkenColor(proj.color, 50)
+                    <div class="bottom">
+                        <p class="text barlow-semibold">${proj.total_task} tarefas</p> 
+                        <p class="text barlow-semibold">${daysRemaining}</p>
+                    </div>
+                `;
 
-            const progressFill = project.querySelector('.progress-fill')
-            const progressPercent = project.querySelector('.percent-text')
-            
-            progressFill.style.width = '80%'
-            progressFill.style.backgroundColor = `${color}`
-            progressPercent.textContent = '80%'
+                project.style.backgroundColor = `#${proj.color}`;
+                
+                const darkerColor = darkenColor(proj.color, 50);
 
-            project.classList.add('card')
-            project.style.backgroundColor = `#${proj.color}`
-            projects.appendChild(project)
-        })
+                const progressFill = project.querySelector('.progress-fill');
+                const progressPercent = project.querySelector('.percent-text');
+                
+                progressFill.style.width = `${proj.percent}%`;
+                progressFill.style.backgroundColor = `${darkerColor}`;
+                progressPercent.textContent = `${proj.percent}%`;
+
+                project.classList.add('card');
+                projectsContainer.appendChild(project);
+            });
         }
     }
+    await loadingData();
+});
 
-    
+function renderTasksToday(tasksToday){
+    // CORRIGIDO: Use document.querySelector
+    const container = document.querySelector('.tasks-today');
 
-    await loadingData()
-})
+    tasksToday.forEach((task) => {
+        const card = document.createElement('div');
+        const date = formatDate(task.limit_date)
+        card.innerHTML = `
+        <div class="date-task">
+            <p class="barlow-regular">${date}</p>
+        </div>
+        <div class="task-title">
+            <p class="barlow-bold">${task.title}</p>
+        </div>
+        <div>
+            <p class="barlow-regular">${task.description}</p>
+        </div>
+        `;
+
+        
+        card.classList.add('task-card')
+        card.style.borderColor = `#${task.proj_color}`
+        container.appendChild(card);
+    });
+}
+
+function formatDate(dataString) {
+  // Mapeamento dos dias da semana e meses em português
+  const diasDaSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+  const mesesDoAno = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+
+  // Cria um objeto Date a partir da string
+  const data = new Date(dataString);
+
+  // Extrai o dia da semana, o dia do mês e o mês
+  const diaDaSemana = diasDaSemana[data.getDay()];
+  const diaDoMes = data.getDate();
+  const mes = mesesDoAno[data.getMonth()];
+
+  // Retorna a data formatada
+  return `${diaDaSemana}, ${diaDoMes} ${mes}`;
+}
+
+
 
 function darkenColor(hex, percent) {
     // Remove o '#' se existir
