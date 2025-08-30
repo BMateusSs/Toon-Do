@@ -17,7 +17,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             
             const recentProjects = result.recent_projects;
             const tasksToday = result.tasks_today;
+            const todayHabits = result.habits_today;
 
+            renderTodayHabits(todayHabits);
             renderTasksToday(tasksToday);
             
             if (recentProjects.length === 0){
@@ -80,6 +82,38 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     await loadingData();
 });
+
+function renderTodayHabits(todayHabits){
+    const container = document.querySelector('.today-habits')
+
+    todayHabits.forEach((habit) => {
+        const habitCard = document.createElement('div')
+
+        habitCard.innerHTML=`
+            <div habit-back>
+                    <img class="habit-image" src="${habit.image}">
+            </div>
+            <div class="infos">
+                <div class="text-infos">
+                    <p class="barlow-semibold">${habit.name}</p>
+                </div>
+                <div class="to-do">
+                    <div class="type-habit">
+                        <p class="barlow-regular type-habit-text">${habit.type}</p>
+                    </div>
+                    <div class="button-container">
+                        <button class="button">
+
+                        </button>
+                    </div>
+                </div>
+                
+            </div>
+        `
+        habitCard.classList.add('state-container')
+        container.appendChild(habitCard)
+    })
+}
 
 function renderTasksToday(tasksToday){
     

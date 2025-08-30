@@ -303,6 +303,11 @@ p {
 
 }
 
+.today-habits {
+    display: flex;
+    gap: 10px
+}
+
 .progress {
     display: flex;
     flex-direction: column;
