@@ -3,7 +3,7 @@ import {useFetch} from '../utils/useFetch.js'
 
 document.addEventListener('DOMContentLoaded', async () => {
     async function loadingData(){
-        const totalProjects = document.querySelector(".total-projects");
+        
         const projectsContainer = document.querySelector(".recent-projects");
 
         const url = 'http://127.0.0.1:5000/tasks/home';
@@ -14,89 +14,104 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (error){
             alert(error);
         } else {
-            totalProjects.innerHTML = `${result.total_projects}`;
+            
             const recentProjects = result.recent_projects;
             const tasksToday = result.tasks_today;
 
             renderTasksToday(tasksToday);
             
-            recentProjects.forEach((proj) => {
-                const project = document.createElement('div');
-                const remaining = proj.days_remaining
-
-                const daysRemaining = remaining === 0 ? 'Até hoje' : remaining === 1 ? '1 dia restante' : `${remaining} dias restantes`
-
-                project.innerHTML = `
-                    <div class="header">
-                        <p class="date-text barlow-regular">29 ago, 2025</p>
-                        <div class="category-container">
-                            <p class="barlow-regular category-text">Estudo</p>
-                        </div>
+            if (recentProjects.length === 0){
+                projectsContainer.innerHTML = `
+                    <div class="empty-container projects barlow-bold">
+                        Sem projetos. Adicionar +
                     </div>
-                    <div class="content">
-                        <h3 class="title barlow-bold">
-                            ${proj.title}
-                        </h3>
-                        <div class="progress">
-                            <div class="progress-details">
-                                <p class="barlow-semibold">Progresso</p>
-                                <p class="barlow-semibold percent-text"></p>
+                `;
+            }else {
+                recentProjects.forEach((proj) => {
+                    const project = document.createElement('div');
+                    const remaining = proj.days_remaining
+
+                    const daysRemaining = remaining === 0 ? 'Até hoje' : remaining === 1 ? '1 dia restante' : `${remaining} dias restantes`
+
+                    project.innerHTML = `
+                        <div class="header">
+                            <p class="date-text barlow-regular">29 ago, 2025</p>
+                            <div class="category-container">
+                                <p class="barlow-regular category-text">Estudo</p>
                             </div>
-                            <div class="progress-track">
-                                <div class="progress-fill">
+                        </div>
+                        <div class="content">
+                            <h3 class="title barlow-bold">
+                                ${proj.title}
+                            </h3>
+                            <div class="progress">
+                                <div class="progress-details">
+                                    <p class="barlow-semibold">Progresso</p>
+                                    <p class="barlow-semibold percent-text"></p>
+                                </div>
+                                <div class="progress-track">
+                                    <div class="progress-fill">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="bottom">
-                        <p class="text barlow-semibold">${proj.total_task} tarefas</p> 
-                        <p class="text barlow-semibold">${daysRemaining}</p>
-                    </div>
-                `;
+                        <div class="bottom">
+                            <p class="text barlow-semibold">${proj.total_task} tarefas</p> 
+                            <p class="text barlow-semibold">${daysRemaining}</p>
+                        </div>
+                    `;
 
-                project.style.backgroundColor = `#${proj.color}`;
-                
-                const darkerColor = darkenColor(proj.color, 50);
+                    project.style.backgroundColor = `#${proj.color}`;
+                    
+                    const darkerColor = darkenColor(proj.color, 50);
 
-                const progressFill = project.querySelector('.progress-fill');
-                const progressPercent = project.querySelector('.percent-text');
-                
-                progressFill.style.width = `${proj.percent}%`;
-                progressFill.style.backgroundColor = `${darkerColor}`;
-                progressPercent.textContent = `${proj.percent}%`;
+                    const progressFill = project.querySelector('.progress-fill');
+                    const progressPercent = project.querySelector('.percent-text');
+                    
+                    progressFill.style.width = `${proj.percent}%`;
+                    progressFill.style.backgroundColor = `${darkerColor}`;
+                    progressPercent.textContent = `${proj.percent}%`;
 
-                project.classList.add('card');
-                projectsContainer.appendChild(project);
-            });
+                    project.classList.add('card');
+                    projectsContainer.appendChild(project);
+                });
+                }
         }
     }
     await loadingData();
 });
 
 function renderTasksToday(tasksToday){
-    // CORRIGIDO: Use document.querySelector
+    
     const container = document.querySelector('.tasks-today');
-
-    tasksToday.forEach((task) => {
-        const card = document.createElement('div');
-        const date = formatDate(task.limit_date)
-        card.innerHTML = `
-        <div class="date-task">
-            <p class="barlow-regular">${date}</p>
-        </div>
-        <div class="task-title">
-            <p class="barlow-bold">${task.title}</p>
-        </div>
-        <div>
-            <p class="barlow-regular">${task.description}</p>
-        </div>
+    container.innerHTML=``
+    if (tasksToday.length === 0){
+        container.innerHTML = `
+            <div class="empty-container tasks barlow-bold">
+                Sem tarefas para hoje. Adicionar +
+            </div>
         `;
-
-        
-        card.classList.add('task-card')
-        card.style.borderColor = `#${task.proj_color}`
-        container.appendChild(card);
-    });
+    } else {
+        tasksToday.forEach((task) => {
+            const card = document.createElement('div');
+            const date = formatDate(task.limit_date)
+            card.innerHTML = `
+            <div class="date-task">
+                <p class="barlow-regular">${date}</p>
+            </div>
+            <div class="task-title">
+                <p class="barlow-bold">${task.title}</p>
+            </div>
+            <div>
+                <p class="barlow-regular">${task.description}</p>
+            </div>
+            `;
+            
+            card.classList.add('task-card')
+            card.style.borderColor = `#${task.proj_color}`
+            container.appendChild(card);
+        });
+}
 }
 
 function formatDate(dataString) {

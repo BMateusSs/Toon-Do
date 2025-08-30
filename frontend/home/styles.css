@@ -130,16 +130,7 @@ p {
     justify-content: center;
 }
 
-.state-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    width: 150px; 
-    height: 150px; 
-    border: 2px solid #4A90E2;
-    border-radius: 10px;
-}
+
 
 .value {
     font-size: 40px;
@@ -156,6 +147,35 @@ p {
 
 .label-text {
     font-size: 12px;
+}
+
+.empty-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+   
+    background-color: #E1F5FE; /* O azul bem claro */
+    border-radius: 10px;
+    border: 2px dashed #B3E5FC; /* Borda tracejada para dar a ideia de "vazio" */
+    color: #4A90E2;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+}
+
+.empty-container.tasks {
+    height: 120px;
+}
+
+.empty-container.projects {
+    height: 200px;
+}
+
+.empty-container:hover {
+    background-color: #B3E5FC;
+    color: #192A56;
 }
 
 .tasks-today {
@@ -214,8 +234,73 @@ p {
 }
 
 .title {
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin: 0;
+}
+
+.state-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 150px; 
+    height: 160px; 
+    border: 2px solid #4A90E2;
+    border-radius: 10px;
+    background-color: #4A90E2;
+    padding: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.infos {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    gap: 5px
+}
+
+.habit-image {
+    width: 100%;
+    height: 90px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 2px
+}
+
+.to-do {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.type-habit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:#B3E5FC;
+    border-radius: 50px;
+    padding: 5px;
+    height: 20px
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button {
+    width: 25px;
+    height: 25px;
+    border:2px solid #E1F5FE;
+    border-radius: 100px;
+    background-color:#4A90E2
+}
+
+.button:hover {
+    border-color:#192A56;
+
 }
 
 .progress {
