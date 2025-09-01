@@ -1,5 +1,6 @@
-import {methodGet} from '../utils/methods.js'
+import {methodGet, methodPost} from '../utils/methods.js'
 import {useFetch} from '../utils/useFetch.js'
+
 
 document.addEventListener('DOMContentLoaded', async () => {
     async function loadingData(){
@@ -33,8 +34,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const project = document.createElement('div');
                     const remaining = proj.days_remaining
 
-                    const daysRemaining = remaining === 0 ? 'Até hoje' : remaining === 1 ? '1 dia restante' : `${remaining} dias restantes`
-
+                    const daysRemaining = remaining === 0 ? 'Até hoje' : remaining === 1 ? '1 dia restante' :
+                                          remaining > 1 ? `${remaining} dias restantes` : 'Fora do prazo'
+                    
                     project.innerHTML = `
                         <div class="header">
                             <p class="date-text barlow-regular">29 ago, 2025</p>
@@ -81,17 +83,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
     await loadingData();
-});
 
-function renderTodayHabits(todayHabits){
+    function renderTodayHabits(todayHabits){
     const container = document.querySelector('.today-habits')
 
     todayHabits.forEach((habit) => {
+        const isCompleted = habit.is_active === 0
+        const img = `../statics/img/${habit.image}`
+
         const habitCard = document.createElement('div')
+        habitCard.classList.add('state-container')
+
+        if (isCompleted){
+            habitCard.classList.add('completed')
+        }
 
         habitCard.innerHTML=`
-            <div habit-back>
-                    <img class="habit-image" src="${habit.image}">
+            <div class="habit-back">
+                    <img class="habit-image" src="${img}">
             </div>
             <div class="infos">
                 <div class="text-infos">
@@ -101,19 +110,72 @@ function renderTodayHabits(todayHabits){
                     <div class="type-habit">
                         <p class="barlow-regular type-habit-text">${habit.type}</p>
                     </div>
-                    <div class="button-container">
-                        <button class="button">
-
-                        </button>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="habit-checkbox-${habit.habit_id}" ${isCompleted ? 'checked' : ''}">
+                        <label for="habit-checkbox-${habit.habit_id}"></label>
                     </div>
                 </div>
                 
             </div>
         `
-        habitCard.classList.add('state-container')
+        
         container.appendChild(habitCard)
+
+        const habitId = `habit-checkbox-${habit.habit_id}`
+        const check = document.getElementById(habitId)
+
+        if (habit.is_active === 0){
+            check.checked = true;
+        }
+        check.addEventListener('change', (event) => {
+            const clickedCheck = event.target;
+            const card = clickedCheck.closest('.state-container')
+
+
+            if (clickedCheck.checked){
+                card.classList.add('completed')
+                updateHabit(habit.habit_id, 0)
+                container.appendChild(card)
+            }else{
+                card.classList.remove('completed')
+                updateHabit(habit.habit_id, 1)
+                container.prepend(card)
+            }
+        })
+
+       
+        
     })
 }
+
+ async function  updateHabit(habitId, isActive){
+            const url = 'http://127.0.0.1:5000/tasks/update_active_habits'
+            const body = {habit_id: habitId, status: isActive}
+            const config = methodPost(body)
+            const {result, error} = await useFetch(url, config)
+
+            if (error) {
+                console.error('Erro ao atualizar hábito:', error);
+                // Reverter o estado do checkbox em caso de erro
+                const checkbox = document.getElementById(`habit-checkbox-${habitId}`);
+                if (checkbox) {
+                    checkbox.checked = !checkbox.checked;
+                    const card = checkbox.closest('.state-container');
+                    if (checkbox.checked) {
+                        card.classList.add('completed');
+                    } else {
+                        card.classList.remove('completed');
+                    }
+                }
+            } else {
+                console.log('Hábito atualizado com sucesso:', result);
+            }
+        }
+});
+
+
+
+
 
 function renderTasksToday(tasksToday){
     

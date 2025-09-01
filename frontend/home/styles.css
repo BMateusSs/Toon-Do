@@ -250,6 +250,12 @@ p {
     background-color: #4A90E2;
     padding: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.completed {
+    filter: grayscale(100%);
+    opacity: 0.7;
 }
 
 .infos {
@@ -258,6 +264,10 @@ p {
     justify-content: space-between;
     width: 100%;
     gap: 5px
+}
+
+.habit-back {
+    width: 100%;
 }
 
 .habit-image {
@@ -284,24 +294,8 @@ p {
     height: 20px
 }
 
-.button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-.button {
-    width: 25px;
-    height: 25px;
-    border:2px solid #E1F5FE;
-    border-radius: 100px;
-    background-color:#4A90E2
-}
 
-.button:hover {
-    border-color:#192A56;
-
-}
 
 .today-habits {
     display: flex;
@@ -340,6 +334,53 @@ p {
     align-items: center;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     padding-top: 10px;
+}
+
+input[type="checkbox"]{
+    display: none
+}
+
+label {
+    display: inline-block;
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    user-select: none;
+}
+
+.checkbox-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+label::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #192A56;
+    border-radius: 50px;
+    background-color: #fff;
+}
+
+label::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 4px;
+    transform: translateY(-50%);
+    
+    color:#fff;
+}
+
+input[type="checkbox"]:checked + label::before {
+    background-color: #192A56;
+    color:#fff;
 }
 
 /* -- Media Queries para Responsividade -- */
