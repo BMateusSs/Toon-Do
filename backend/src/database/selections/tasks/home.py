@@ -107,7 +107,7 @@ def habits_today(user_id):
 
     try:
         query = '''
-            SELECT id, name, type, image_url FROM habits WHERE user_id = %s AND is_active = 1 ORDER BY created_at ASC;
+            SELECT id, name, type, image_url, is_active FROM habits WHERE user_id = %s ORDER BY is_active DESC;
         '''
         cursor.execute(query, (user_id,))
         tasks = cursor.fetchall()
@@ -118,7 +118,8 @@ def habits_today(user_id):
                 'habit_id': task[0],
                 'name': task[1],
                 'type': task[2],
-                'image': task[3]
+                'image': task[3],
+                'is_active': task[4]
             })
         return response
     
