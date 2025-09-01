@@ -2,6 +2,7 @@ from . import tasks_bp
 from flask import request, jsonify
 from backend.src.utils.token_required import token_required
 from backend.src.database.selections.tasks.home import total_projects, projects, tasks_today, habits_today
+from backend.src.database.selections.tasks.projects import all_projects
 from backend.src.database.insertions.updates import update_habit_status
 
 @tasks_bp.route('/home', methods=['GET'])
@@ -34,3 +35,21 @@ def update_habit(user_id):
         return jsonify({'message': 'tudo certo'}), 200
     
     return jsonify({'error': 'erro'}), 500
+
+@tasks_bp.route('/all_projects', methods=['GET'])
+@token_required
+def projects_page(user_id):
+    data = request.get_json()
+
+    pending = all_projects(user_id, 'pending')
+    progress = all_projects(user_id, 'progress')
+    finished = all_projects(user_id, 'finished')
+
+    response = {
+        'pending': pending,
+        'progress': progress,
+        'finished': finished
+    }
+
+    return jsonify(response)
+
