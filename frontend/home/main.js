@@ -33,4 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
 
     })
+
+    document.getElementById('home').classList.add('active-content')
+    pagesFunction['home']()
 })
