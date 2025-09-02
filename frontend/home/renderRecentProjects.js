@@ -2,6 +2,7 @@ import {darkenColor} from '../utils/helpers.js'
 
 export function renderRecentProjects(recentProjects){
     const projectsContainer = document.querySelector('.recent-projects')
+    projectsContainer.innerHTML=``
     if (recentProjects.length === 0){
         projectsContainer.innerHTML = `
             <div class="empty-container projects barlow-bold">
