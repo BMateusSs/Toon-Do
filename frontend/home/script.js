@@ -3,15 +3,6 @@ import {useFetch} from '../utils/useFetch.js'
 
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const buttons = document.querySelectorAll('.menu-button')
-    buttons.forEach((button) => {
-        button.addEventListener('click', () =>{
-            buttons.forEach(btn => {
-                btn.classList.remove('active')
-            })
-            button.classList.add('active')
-        })
-    })
     async function loadingData(){
         
         const projectsContainer = document.querySelector(".recent-projects");

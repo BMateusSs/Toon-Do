@@ -383,22 +383,6 @@ input[type="checkbox"]:checked + label::before {
     color:#fff;
 }
 
-.menu-button {
-    width: 50px;
-    height: 50px;
-    border: 0px;
-    border-radius: 100px;
-    background-color:#4A90E2;
-    color: #192A56;
-    cursor: pointer;
-}
-
-.menu-button.active {
-    background-color:#192A56;
-    color:#4A90E2;
-    box-shadow:0px 4px 8px rgba(0, 0, 0, 0.2)
-}
-
 /* -- Media Queries para Responsividade -- */
 @media (max-width: 1000px) {
     .container {
@@ -441,12 +425,4 @@ input[type="checkbox"]:checked + label::before {
     .card {
         width: 100%;
     }
-}
-
-.content-block {
-    display: none;
-}
-
-.content-block.active-content {
-    display: block;
 }
