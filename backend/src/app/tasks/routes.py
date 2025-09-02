@@ -39,7 +39,6 @@ def update_habit(user_id):
 @tasks_bp.route('/all_projects', methods=['GET'])
 @token_required
 def projects_page(user_id):
-    data = request.get_json()
 
     pending = all_projects(user_id, 'pending')
     progress = all_projects(user_id, 'progress')
