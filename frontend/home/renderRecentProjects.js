@@ -19,43 +19,34 @@ export function renderRecentProjects(recentProjects){
             
             project.innerHTML = `
                 <div class="header">
-                    <p class="date-text barlow-regular">29 ago, 2025</p>
-                    <div class="category-container">
-                        <p class="barlow-regular category-text">Estudo</p>
-                    </div>
+                    
+                    
                 </div>
                 <div class="content">
+                    <div class="progress-details">
+                        <p class="barlow-semibold percent-text"></p>
+                    </div>
                     <h3 class="title barlow-bold">
                         ${proj.title}
                     </h3>
-                    <div class="progress">
-                        <div class="progress-details">
-                            <p class="barlow-semibold">Progresso</p>
-                            <p class="barlow-semibold percent-text"></p>
-                        </div>
-                        <div class="progress-track">
-                            <div class="progress-fill">
-                            </div>
-                        </div>
-                    </div>
+                    
+                    
+                
                 </div>
                 <div class="bottom">
                     <p class="text barlow-semibold">${proj.total_task} tarefas</p> 
-                    <p class="text barlow-semibold">${daysRemaining}</p>
                 </div>
             `;
-
-            project.style.backgroundColor = `#${proj.color}`;
             
-            const darkerColor = darkenColor(proj.color, 50);
+            const darkerColor = darkenColor(proj.color, 25);
 
-            const progressFill = project.querySelector('.progress-fill');
             const progressPercent = project.querySelector('.percent-text');
-            
-            progressFill.style.width = `${proj.percent}%`;
-            progressFill.style.backgroundColor = `${darkerColor}`;
+            const progressDetails = project.querySelector('.progress-details');
+            const header = project.querySelector('.header')
+        
             progressPercent.textContent = `${proj.percent}%`;
-
+            header.style.backgroundColor = `#${proj.color}`;
+            progressDetails.style.backgroundColor = darkerColor;
             project.classList.add('card');
             projectsContainer.appendChild(project);
         });

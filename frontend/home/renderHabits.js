@@ -21,7 +21,7 @@ export function renderHabits(todayHabits){
         </div>
         <div class="infos">
             <div class="text-infos">
-                <p class="barlow-semibold">${habit.name}</p>
+                <p class="title barlow-semibold">${habit.name}</p>
             </div>
             <div class="to-do">
                 <div class="type-habit">
