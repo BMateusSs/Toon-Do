@@ -22,3 +22,22 @@ def update_habit_status(user_id, habit_id, status):
     finally:
         cursor.close()
         conn.close()
+
+def update_task_status(user_id, task_id, status):
+    conn = connection()
+    cursor = conn.cursor()
+
+    try: 
+        query = '''
+        UPDATE tasks t
+        LEFT JOIN projects p
+        ON t.proj_id = p.id
+        SET t.status = %s
+        WHERE t.id = %s AND p.user_id = %s
+        '''
+    except Exception as e:
+        print(f"Erro ao atualizar hábito: {e}")
+        return False
+    finally:
+        cursor.close()
+        conn.close()
