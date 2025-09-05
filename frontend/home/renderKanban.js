@@ -49,44 +49,42 @@ function renderTasks(element, tasks){
 
     let draggedCard
 
-    const dragStart = (event) => {
-        draggedCard = event.target
-        event.dataTransfer.effectAllowed = "move"
-    } 
-
-    const draggedOver = (event) => {
-        event.preventDefault()
-
-    }
-
-    const dragEnter = ({target}) => {
-        if (target.classList.contains('kanban-content')){
-            target.classList.add('collumn-highlight')
-        }
-        
-        console.log('entrou')
-    }
-
-    const dragLeave = ({target}) => {
-        target.classList.remove('collumn-highlight')
-    }
-
-    const drop = ({target}) => {
-        if (target.classList.contains('kanban-content')){
-            target.appendChild(draggedCard)
-        }
-        
-    }
-
     cards.forEach((card) => {
-        card.addEventListener('dragstart', dragStart)
+        card.addEventListener('dragstart', (event) => {
+            draggedCard = event.target
+        })
     })
 
-
     columns.forEach((column) => {
-        column.addEventListener('dragover', draggedOver)
-        column.addEventListener('dragenter', dragEnter)
-        column.addEventListener('dragleave', dragLeave)
-        column.addEventListener('drop', drop)
+        const kanbanContent = column.querySelector('.kanban-content')
+
+        column.addEventListener('dragover', (event) => {
+            event.preventDefault()
+        })
+
+
+        column.addEventListener('dragenter', (event) => {
+            console.log('entrouuuuu')
+            event.preventDefault()
+            column.classList.add('collumn-highlight')
+        })
+
+        column.addEventListener('dragleave', (event) => {
+            if (!column.contains(event.relatedTarget)){
+                column.classList.remove('collumn-highlight')
+            }
+        })
+
+        kanbanContent.addEventListener('drop', (event) => {
+             event.preventDefault()
+
+            if (draggedCard){
+                kanbanContent.appendChild(draggedCard)
+                column.classList.remove('collumn-highlight')
+            }
+
+            draggedCard = null
+        })
+
     })
 }
