@@ -2,8 +2,16 @@ import { methodPost } from '../utils/methods.js'
 import { useFetch } from '../utils/useFetch.js'
 import { formatDate } from '../utils/helpers.js'
 
+const status = {
+    'kanban-pending': 'pending',
+    'kanban-progress': 'progress',
+    'kanban-finished': 'finished'
+}
+
 export async function renderKanban(projectId = 4){  
     const pending = document.getElementById('kanban-pending')
+    const finished = document.getElementById('kanban-finished')
+    const progress = document.getElementById('kanban-progress')
     const url = 'http://127.0.0.1:5000/tasks/projects_tasks'
     const body = {proj_id: projectId}
     const config = methodPost(body)
@@ -16,6 +24,8 @@ export async function renderKanban(projectId = 4){
     }
     
     renderTasks(pending, result.pending)
+    renderTasks(progress, result.progress)
+    renderTasks(finished, result.finished)
 }
 
 function renderTasks(element, tasks){
@@ -81,10 +91,22 @@ function renderTasks(element, tasks){
             if (draggedCard){
                 kanbanContent.appendChild(draggedCard)
                 column.classList.remove('collumn-highlight')
+                
+                const newStatus = status[kanbanContent.id]
+                updateTaskStatus(draggedCard.id, newStatus)
             }
 
             draggedCard = null
         })
 
     })
+}
+
+async function updateTaskStatus(task_id, status){
+    const pending = document.getElementById('kanban-pending')
+    const url = 'http://127.0.0.1:5000/tasks/update_task_status'
+    const body = {task_id: task_id, status: status}
+    const config = methodPost(body)
+
+    const {result, error} = await useFetch(url, config)
 }
