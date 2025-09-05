@@ -52,3 +52,46 @@ def all_projects(user_id, status):
     finally:
         cursor.close()
         conn.close()
+
+def get_projects_tasks(user_id, proj_id, status):
+    conn = connection()
+    cursor = conn.cursor()
+
+    try:
+        query = '''
+        SELECT
+            t.id,
+            t.proj_id,
+            t.title,
+            t.description_task,
+            t.limit_date,
+            t.color,
+            t.status
+        FROM
+            projects p
+        LEFT JOIN
+            tasks t
+        ON
+            p.id = t.proj_id
+        WHERE 
+            t.proj_id = %s AND p.user_id = %s AND status = %s;
+        '''
+        cursor.execute(query, (proj_id, user_id, status,))
+        tasks = cursor.fetchall()
+
+        data = []
+        for task in tasks:
+            data.append({
+                'id': task[0],
+                'proj_id': task[1],
+                'title': task[2],
+                'description': task[3],
+                'limit_date': task[4],
+                'color': task[5],
+                'status': task[6]
+            })
+        return data
+
+    finally:
+        cursor.close()
+        conn.close()
