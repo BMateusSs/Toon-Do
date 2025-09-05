@@ -1,11 +1,13 @@
 ﻿import { useFetch } from "../utils/useFetch.js"
 import { methodGet } from "../utils/methods.js"
 import { darkenColor } from "../utils/helpers.js"
+import { renderKanban } from "./renderKanban.js"
 
 export async function renderProjects(){
     const finishedContainer = document.querySelector(".finished-projects")
     const progressContainer = document.querySelector(".progress-projects")
     const pendingContainer = document.querySelector(".pending-projects")
+    
 
     const url = "http://127.0.0.1:5000/tasks/all_projects"
     const config = methodGet()
@@ -69,6 +71,19 @@ function renderProjectCard(element, projects){
 
             project.classList.add("card");
             element.appendChild(project);
+
+            project.addEventListener('click', () => {
+                console.log('esta entrandooo')
+                const pages = document.querySelectorAll('.content-block')
+
+                pages.forEach((page) => {
+                    page.classList.remove('active-content')
+                })
+
+                const page = document.getElementById('kanban')
+                page.classList.add('active-content')
+                renderKanban(proj.id)
+            })
         });
         }
 }

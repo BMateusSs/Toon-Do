@@ -15,7 +15,7 @@ export function methodPost(body) {
 
 export function methodGet() {
     const token = localStorage.getItem('token');
-    console.log(token)
+    
     const method = {
         headers: {
             'Accept': 'application/json',

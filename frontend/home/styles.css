@@ -21,10 +21,14 @@
     font-weight: 700;
 }
 
+html, body {
+    height: 100vh; /* Altura total da viewport */
+}
+
 body {
     background-color: #192A56;
     display: block;
-    height: 100%;
+    height: 100vh; /* Altura total da viewport */
 }
 
 .main-header {
@@ -112,7 +116,7 @@ body {
 
 .container {
     flex-grow: 1;
-    height: 100%;
+    height: 100vh; /* Altura total da viewport em vez de 100% */
     
     background-color: #101520 ;
     padding: 10px;
@@ -245,6 +249,7 @@ p {
     position: relative;
     box-sizing: border-box;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .header {
@@ -349,8 +354,8 @@ p {
 
 .progress-details {
     position: absolute;
-    top: 10px;   /* distância do topo do card */
-    right: 110px; /* distância da lateral direita */
+    top: 10px; 
+    right: 110px; 
     width: 30px;
     height: 30px;
     display: flex;
@@ -527,4 +532,57 @@ input[type="checkbox"]:checked+label::before {
     display: flex;
     flex-direction: row;
     gap: 10px;
+}
+
+.kaban-column {
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    border-radius: 5%;
+    background-color: #C2E1C2;
+    width: 270px;
+    
+    padding: 20px;
+    gap: 10px;
+}
+
+.kanban-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    height: 100%;
+    width: 100%;
+}
+
+.kaban-header {
+    display: flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items: center;
+}
+
+.kaban-button {
+    width: 100%;
+    height: 35px;
+    background-color: transparent;
+    border: 2px dashed green;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.kaban-button:hover {
+    border: 2px solid green;
+}
+
+.kanban-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.collumn-highlight {
+    border:2px solid #192A56;
+    border-radius: 10px;
 }
