@@ -58,9 +58,9 @@ def projects_tasks(user_id):
     data = request.get_json()
     proj_id = data.get('proj_id')
 
-    pending = get_projects_tasks(user_id, proj_id, 'pendente')
-    progress = get_projects_tasks(user_id, proj_id, 'fazendo')
-    finished = get_projects_tasks(user_id, proj_id, 'finalizado')
+    pending = get_projects_tasks(user_id, proj_id, 'pending')
+    progress = get_projects_tasks(user_id, proj_id, 'progress')
+    finished = get_projects_tasks(user_id, proj_id, 'finished')
 
     response = {
         'pending': pending,
