@@ -82,7 +82,7 @@ function renderProjectCard(element, projects){
 
                 const page = document.getElementById('kanban')
                 page.classList.add('active-content')
-                renderKanban(proj.id)
+                renderKanban(proj.proj_id)
             })
         });
         }

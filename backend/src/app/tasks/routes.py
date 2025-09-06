@@ -3,7 +3,7 @@ from flask import request, jsonify
 from backend.src.utils.token_required import token_required
 from backend.src.database.selections.tasks.home import total_projects, projects, tasks_today, habits_today
 from backend.src.database.selections.tasks.projects import all_projects, get_projects_tasks
-from backend.src.database.insertions.updates import update_habit_status
+from backend.src.database.insertions.updates import update_habit_status, update_task_status
 
 @tasks_bp.route('/home', methods=['GET'])
 @token_required
@@ -69,3 +69,17 @@ def projects_tasks(user_id):
     }
 
     return jsonify(response)
+
+@tasks_bp.route('/update_task_status', methods=['POST'])
+@token_required
+def update_task(user_id):
+    data = request.get_json()
+    task_id = data.get('task_id')
+    status = data.get('status')
+
+    response = update_task_status(user_id, task_id, status)
+
+    if response:
+        return jsonify({'message': 'tudo certo'}), 200
+    
+    return jsonify({'error': 'erro'}), 500

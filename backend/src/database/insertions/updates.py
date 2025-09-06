@@ -35,6 +35,11 @@ def update_task_status(user_id, task_id, status):
         SET t.status = %s
         WHERE t.id = %s AND p.user_id = %s
         '''
+
+        cursor.execute(query, (status, task_id, user_id))
+        conn.commit()
+        return True
+
     except Exception as e:
         print(f"Erro ao atualizar hábito: {e}")
         return False
