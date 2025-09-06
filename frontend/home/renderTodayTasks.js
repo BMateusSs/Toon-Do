@@ -16,9 +16,6 @@ export function renderTodayTasks(tasksToday){
             <div class="date-task">
                 <p class="barlow-regular">${date}</p>
             </div>
-            <div class="task-title">
-                <p class="barlow-bold">${task.title}</p>
-            </div>
             <div>
                 <p class="barlow-regular">${task.description}</p>
             </div>

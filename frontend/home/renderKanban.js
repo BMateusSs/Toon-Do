@@ -51,9 +51,7 @@ function renderTasks(element, tasks) {
             <div class="date-task">
                 <p class="barlow-regular">${date}</p>
             </div>
-            <div class="task-title">
-                <p class="barlow-bold">${task.title}</p>
-            </div>
+            
             <div>
                 <p class="barlow-regular">${task.description}</p>
             </div>
@@ -88,8 +86,9 @@ function setupButtons(proj_id) {
             if (!card.textContent){
                 card.remove()
             }else {
+                const taskStatus = status[content.id]
                 const description = card.textContent
-                createTask(proj_id, description)
+                createTask(proj_id, description, taskStatus, '2025-09-06')
             }
         })
 
@@ -161,7 +160,13 @@ async function updateTaskStatus(task_id, status) {
     }
 }
 
-// ----------------------------
-// Inicialização global
-// ----------------------------
-  // ⚠️ Só roda uma vez, fora do renderTasks
+async function createTask(proj_id, description, status, date) {
+    const url = 'http://127.0.0.1:5000/tasks/create_task'
+    const body = { proj_id: proj_id, description: description, status: status, limit_date: date }
+    const config = methodPost(body)
+
+    const { result, error } = await useFetch(url, config)
+    if (error) {
+        console.log(error)
+    }
+}
