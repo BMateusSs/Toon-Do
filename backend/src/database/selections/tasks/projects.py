@@ -5,10 +5,10 @@ def all_projects(user_id, status):
     cursor = conn.cursor()
 
     havings = {
-        'pending': 'CAST(SUM(t.completed) AS FLOAT) / COALESCE(COUNT(t.id), 1) = 0',
-        'progress': 'CAST(SUM(t.completed) AS FLOAT) / COALESCE(COUNT(t.id), 1) > 0 '
-                    'AND CAST(SUM(t.completed) AS FLOAT) / COALESCE(COUNT(t.id), 1) < 1',
-        'finished': 'CAST(SUM(t.completed) AS FLOAT) / COALESCE(COUNT(t.id), 1) = 1'
+        'pending': "SUM(t.status = 'finished') / COALESCE(COUNT(t.id), 1) = 0",
+        'progress': "SUM(t.status = 'finished') / COALESCE(COUNT(t.id), 1) > 0 "
+                    "AND SUM(t.status = 'finished') / COALESCE(COUNT(t.id), 1) < 1",
+        'finished': "SUM(t.status = 'finished') / COALESCE(COUNT(t.id), 1) = 1"
     }
 
     try:
@@ -23,7 +23,7 @@ def all_projects(user_id, status):
             p.title,
             p.color,
             COUNT(t.proj_id),
-            CAST(SUM(t.completed) AS FLOAT) / COALESCE(COUNT(t.id), 1) AS percent
+            CAST(SUM(t.status = 'finished') AS FLOAT) / COALESCE(COUNT(t.id), 1) AS percent
         FROM
             projects p
         LEFT JOIN
@@ -62,7 +62,6 @@ def get_projects_tasks(user_id, proj_id, status):
         SELECT
             t.id,
             t.proj_id,
-            t.title,
             t.description_task,
             t.limit_date,
             t.color,
@@ -84,11 +83,10 @@ def get_projects_tasks(user_id, proj_id, status):
             data.append({
                 'id': task[0],
                 'proj_id': task[1],
-                'title': task[2],
-                'description': task[3],
-                'limit_date': task[4],
-                'color': task[5],
-                'status': task[6]
+                'description': task[2],
+                'limit_date': task[3],
+                'color': task[4],
+                'status': task[5]
             })
         return data
 

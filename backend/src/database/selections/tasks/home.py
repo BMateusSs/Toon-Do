@@ -67,7 +67,6 @@ def tasks_today(user_id):
         query = '''
         SELECT
             t.id AS task_id,
-            t.title,
             t.description_task,
             t.color AS task_color,
             t.limit_date,
@@ -88,12 +87,11 @@ def tasks_today(user_id):
         for task in tasks:
             response.append({
                 'task_id': task[0],
-                'title': task[1],
-                'description': task[2],
-                'task_color': task[3],
-                'limit_date': task[4],
-                'proj_id': task[5],
-                'proj_color': task[6]
+                'description': task[1],
+                'task_color': task[2],
+                'limit_date': task[3],
+                'proj_id': task[4],
+                'proj_color': task[5]
             })
         return response
     
