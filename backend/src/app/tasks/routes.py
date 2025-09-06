@@ -4,6 +4,7 @@ from backend.src.utils.token_required import token_required
 from backend.src.database.selections.tasks.home import total_projects, projects, tasks_today, habits_today
 from backend.src.database.selections.tasks.projects import all_projects, get_projects_tasks
 from backend.src.database.insertions.updates import update_habit_status, update_task_status
+from backend.src.database.insertions.create import create_task
 
 @tasks_bp.route('/home', methods=['GET'])
 @token_required
@@ -83,3 +84,19 @@ def update_task(user_id):
         return jsonify({'message': 'tudo certo'}), 200
     
     return jsonify({'error': 'erro'}), 500
+
+@tasks_bp.route('/create_task', methods=['POST'])
+@token_required
+def create_news_tasks(user_id):
+    data = request.get_json()
+    proj_id = data.get('proj_id')
+    description = data.get('description')
+    status = data.get('status')
+    limit_date = data.get('limit_date')
+
+    status, message = create_task(user_id, proj_id, description, status, limit_date)
+
+    if status:
+        return jsonify({'message': message}), 200
+    
+    return jsonify({'error': message}), 500
