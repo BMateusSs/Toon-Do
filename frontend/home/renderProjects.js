@@ -55,7 +55,7 @@ function renderProjectCard(element, projects){
                 
                 </div>
                 <div class="bottom">
-                    <p class="text barlow-semibold">${proj.total_task} tarefas</p> 
+                    <p class="text barlow-semibold">${proj.tasks} tarefas</p> 
                 </div>
             `;
 
@@ -82,7 +82,7 @@ function renderProjectCard(element, projects){
 
                 const page = document.getElementById('kanban')
                 page.classList.add('active-content')
-                renderKanban(proj.proj_id)
+                renderKanban(proj.proj_id, proj.title, proj.percent, proj.tasks)
             })
         });
         }

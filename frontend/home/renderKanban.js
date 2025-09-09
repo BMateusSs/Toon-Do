@@ -10,10 +10,15 @@ const status = {
 
 let draggedCard
 
-export async function renderKanban(projectId) {
+export async function renderKanban(projectId, title, percent, total_task) {
     const pending = document.getElementById('kanban-pending')
     const finished = document.getElementById('kanban-finished')
     const progress = document.getElementById('kanban-progress')
+
+    document.querySelector('.project-title').textContent = title;
+    document.querySelector('#progress-text').textContent = `${percent}%`;
+    document.querySelector('.progress-bar').style.width = percent + '%';
+    document.querySelector('#total-tasks').textContent = `${total_task} tarefas`;
 
     const url = 'http://127.0.0.1:5000/tasks/projects_tasks'
     const body = { proj_id: projectId }

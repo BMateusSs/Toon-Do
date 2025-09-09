@@ -9,24 +9,7 @@
     <title>Document</title>
 </head>
 <body>
-    <header class="main-header">
-        
-        <div class="title-search">
-            <h1 class="barlow-bold main-title">Organiza-Aí</h1>
-
-            <div class="search"></div>
-        </div>
-        
-
-        <div class="bell-image">
-            <i class="fa-regular fa-bell fa-2x"></i>
-            <div class="image-name">
-                <div class="image">B</div>
-                <p class="name">Bruno M.</p>
-            </div>
-            
-        </div>
-    </header>
+    
     <div class="all-content">
         <div class="main-menu">
             <button class="menu-button active" data-page="home">
@@ -94,10 +77,24 @@
             </div>
 
             <div class="content-block " id="kanban">
+                <div class="project-header">
+                <div class="project-details">
+                    <h1 class="project-title barlow-bold"></h1>
+                </div>
+                
+                <div class="project-stats">
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" ></div>
+                    </div>
+                    <span class="progress-text barlow-bold" id="progress-text"></span>
+                    <span class="progress-text barlow-bold" id="total-tasks"></span>
+                </div>
+
+            </div>
                 <div class="kanban-container">
                 <div class="kaban-column" >
                     <div class="kaban-header">
-                        <h3 class="barlow-bold">Pendente</h3>
+                        <h3 class="kanban-title barlow-bold">Pendente</h3>
                         <h3 class="barlow-bold">...</h3>
                     </div>
                     <div class="kanban-content" id="kanban-pending">
@@ -110,7 +107,7 @@
 
                 <div class="kaban-column" >
                     <div class="kaban-header">
-                        <h3 class="barlow-bold">Fazendo</h3>
+                        <h3 class="kanban-title barlow-bold">Fazendo</h3>
                         <h3 class="barlow-bold">...</h3>
                     </div>
                     <div class="kanban-content" id="kanban-progress">
@@ -123,7 +120,7 @@
 
                 <div class="kaban-column" >
                     <div class="kaban-header">
-                        <h3 class="barlow-bold">Finalizado</h3>
+                        <h3 class="kanban-title barlow-bold">Finalizado</h3>
                         <h3 class="barlow-bold">...</h3>
                     </div>
                     <div class="kanban-content" id="kanban-finished">
